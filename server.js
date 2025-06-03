@@ -4,10 +4,12 @@ const cloudinary = require('cloudinary');
 const app = require('./backend/app');
 const connectDatabase = require('./backend/config/database');
 
-// ✅ Load .env variables at the very top and from correct path
+
 require('dotenv').config({ path: 'backend/config/config.env' });
 
 const PORT = process.env.PORT || 4000;
+
+
 
 // ✅ Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
