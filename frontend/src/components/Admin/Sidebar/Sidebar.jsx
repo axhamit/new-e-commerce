@@ -7,6 +7,7 @@ import ReviewsIcon from '@mui/icons-material/Reviews';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import CategoryIcon from '@mui/icons-material/Category';
 import CloseIcon from '@mui/icons-material/Close';
 import Avatar from '@mui/material/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -44,6 +45,11 @@ const navMenu = [
         icon: <ReviewsIcon />,
         label: "Reviews",
         ref: "/admin/reviews",
+    },
+    {
+        icon: <CategoryIcon />,
+        label: "Categories",
+        ref: "/admin/categories",
     },
     {
         icon: <AccountBoxIcon />,
