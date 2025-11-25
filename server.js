@@ -5,7 +5,11 @@ const app = require('./backend/app');
 const connectDatabase = require('./backend/config/database');
 
 
-require('dotenv').config({ path: 'backend/config/config.env' });
+require('dotenv').config({
+  path: path.join(__dirname, 'backend/config/.config.env')
+});
+
+
 
 const PORT = process.env.PORT || 4000;
 

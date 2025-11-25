@@ -34,6 +34,7 @@ import UpdateProduct from './components/Admin/UpdateProduct';
 import UserTable from './components/Admin/UserTable';
 import UpdateUser from './components/Admin/UpdateUser';
 import ReviewsTable from './components/Admin/ReviewsTable';
+import CategoryTable from './components/Admin/CategoryTable';
 import Wishlist from './components/Wishlist/Wishlist';
 import NotFound from './components/NotFound';
 
@@ -233,6 +234,14 @@ function App() {
           <ProtectedRoute isAdmin={true}>
             <Dashboard activeTab={5}>
               <ReviewsTable />
+            </Dashboard>
+          </ProtectedRoute>
+        } ></Route>
+
+        <Route path="/admin/categories" element={
+          <ProtectedRoute isAdmin={true}>
+            <Dashboard activeTab={6}>
+              <CategoryTable />
             </Dashboard>
           </ProtectedRoute>
         } ></Route>

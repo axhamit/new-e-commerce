@@ -28,7 +28,19 @@ const Products = () => {
     const location = useLocation();
 
     const [price, setPrice] = useState([0, 200000]);
-    const [category, setCategory] = useState(location.search ? location.search.split("=")[1] : "");
+    
+    // Parse URL parameters properly
+    const parseQueryParams = (search) => {
+        const params = new URLSearchParams(search);
+        return {
+            category: params.get('category') || '',
+            subcategory: params.get('subcategory') || ''
+        };
+    };
+    
+    const queryParams = parseQueryParams(location.search);
+    const [category, setCategory] = useState(queryParams.category);
+    const [subcategory, setSubcategory] = useState(queryParams.subcategory);
     const [ratings, setRatings] = useState(0);
 
     // pagination
@@ -48,16 +60,24 @@ const Products = () => {
     const clearFilters = () => {
         setPrice([0, 200000]);
         setCategory("");
+        setSubcategory("");
         setRatings(0);
     }
+
+    useEffect(() => {
+        // Update category and subcategory when URL changes
+        const params = parseQueryParams(location.search);
+        setCategory(params.category);
+        setSubcategory(params.subcategory);
+    }, [location.search]);
 
     useEffect(() => {
         if (error) {
             enqueueSnackbar(error, { variant: "error" });
             dispatch(clearErrors());
         }
-        dispatch(getProducts(keyword, category, price, ratings, currentPage));
-    }, [dispatch, keyword, category, price, ratings, currentPage, error, enqueueSnackbar]);
+        dispatch(getProducts(keyword, category, subcategory, price, ratings, currentPage));
+    }, [dispatch, keyword, category, subcategory, price, ratings, currentPage, error, enqueueSnackbar]);
 
     return (
         <>

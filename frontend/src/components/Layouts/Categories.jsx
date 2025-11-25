@@ -10,42 +10,42 @@ import grocery from '../../assets/images/Categories/grocery.png';
 import { Link } from 'react-router-dom';
 
 const catNav = [
-    {
-        name: "Mobiles",
-        icon: mobiles,
-    },
+    // {
+    //     name: "Mobiles",
+    //     icon: mobiles,
+    // },
     {
         name: "Fashion",
         icon: fashion,
     },
-    {
-        name: "Electronics",
-        icon: electronics,
-    },
+    // {
+    //     name: "Electronics",
+    //     icon: electronics,
+    // },
     {
         name: "Home",
         icon: home,
     },
-    {
-        name: "Travel",
-        icon: travel,
-    },
-    {
-        name: "Appliances",
-        icon: appliances,
-    },
-    {
-        name: "Furniture",
-        icon: furniture,
-    },
+    // {
+    //     name: "Travel",
+    //     icon: travel,
+    // },
+    // {
+    //     name: "Appliances",
+    //     icon: appliances,
+    // },
+    // {
+    //     name: "Furniture",
+    //     icon: furniture,
+    // },
     {
         name: "Beauty,Toys & more",
         icon: beauty,
     },
-    {
-        name: "Grocery",
-        icon: grocery,
-    },
+    // {
+    //     name: "Grocery",
+    //     icon: grocery,
+    // },
 ]
 
 const Categories = () => {

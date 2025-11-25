@@ -1,10 +1,9 @@
 // Categories Used In Entire App
 export const categories = [
-    "Electronics",
-    "Mobiles",
-    "Laptops",
     "Fashion",
-    "Appliances",
+    "Men",
+    "Women",
+    "Beauty",
     "Home",
 ];
 

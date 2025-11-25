@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { NEW_PRODUCT_RESET } from '../../constants/productConstants';
 import { createProduct, clearErrors } from '../../actions/productAction';
 import ImageIcon from '@mui/icons-material/Image';
-import { categories } from '../../utils/constants';
+import { getAllCategories } from '../../actions/categoryAction';
 import MetaData from '../Layouts/MetaData';
 import BackdropLoader from '../Layouts/BackdropLoader';
 
@@ -32,8 +32,11 @@ const NewProduct = () => {
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
     const [cuttedPrice, setCuttedPrice] = useState(0);
-    const [category, setCategory] = useState("");
+    const [mainCategory, setMainCategory] = useState(""); // Main category like "Fashion"
+    const [category, setCategory] = useState(""); // Final category like "Men" or "Women"
+    const [subcategory, setSubcategory] = useState(""); // Item like "Suits" or "Sarees"
     const [stock, setStock] = useState(0);
+    const { categories } = useSelector((state) => state.categories);
     const [warranty, setWarranty] = useState(0);
     const [brand, setBrand] = useState("");
     const [images, setImages] = useState([]);
@@ -118,6 +121,14 @@ const NewProduct = () => {
             enqueueSnackbar("Add Product Images", { variant: "warning" });
             return;
         }
+        if (!mainCategory) {
+            enqueueSnackbar("Select Main Category", { variant: "warning" });
+            return;
+        }
+        if (selectedMainCategory && availableSubcategories.length > 0 && !category) {
+            enqueueSnackbar("Select Subcategory", { variant: "warning" });
+            return;
+        }
 
         const formData = new FormData();
 
@@ -125,7 +136,11 @@ const NewProduct = () => {
         formData.set("description", description);
         formData.set("price", price);
         formData.set("cuttedPrice", cuttedPrice);
-        formData.set("category", category);
+        // Category should be the subcategory name (Men or Women), not main category (Fashion)
+        formData.set("category", category || mainCategory);
+        if (subcategory) {
+            formData.set("subcategory", subcategory);
+        }
         formData.set("stock", stock);
         formData.set("warranty", warranty);
         formData.set("brandname", brand);
@@ -147,6 +162,10 @@ const NewProduct = () => {
     }
 
     useEffect(() => {
+        dispatch(getAllCategories());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (error) {
             enqueueSnackbar(error, { variant: "error" });
             dispatch(clearErrors());
@@ -157,6 +176,27 @@ const NewProduct = () => {
             navigate("/admin/products");
         }
     }, [dispatch, error, success, navigate, enqueueSnackbar]);
+
+    // Get selected main category object (e.g., "Fashion")
+    const selectedMainCategory = categories.find(cat => cat.name === mainCategory);
+    const availableSubcategories = selectedMainCategory?.subcategories || [];
+    
+    // Get selected subcategory object to show items (e.g., "Women")
+    const selectedSubcategory = availableSubcategories.find(sub => sub.name === category);
+    const availableItems = selectedSubcategory?.items || [];
+    
+    // Handle main category change
+    const handleMainCategoryChange = (mainCatName) => {
+        setMainCategory(mainCatName);
+        setCategory("");
+        setSubcategory("");
+    };
+    
+    // Handle subcategory selection (e.g., "Men" or "Women")
+    const handleSubcategoryChange = (subcategoryName) => {
+        setCategory(subcategoryName);
+        setSubcategory(""); // Reset subcategory item when subcategory changes
+    };
 
     return (
         <>
@@ -214,23 +254,61 @@ const NewProduct = () => {
                             onChange={(e) => setCuttedPrice(e.target.value)}
                         />
                     </div>
-                    <div className="flex justify-between gap-4">
+                    <div className="flex justify-between gap-4 flex-wrap">
                         <TextField
-                            label="Category"
+                            label="Main Category"
                             select
                             fullWidth
                             variant="outlined"
                             size="small"
                             required
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
+                            value={mainCategory}
+                            onChange={(e) => handleMainCategoryChange(e.target.value)}
                         >
-                            {categories.map((el, i) => (
-                                <MenuItem value={el} key={i}>
-                                    {el}
+                            {categories && categories.map((cat) => (
+                                <MenuItem value={cat.name} key={cat._id}>
+                                    {cat.name}
                                 </MenuItem>
                             ))}
                         </TextField>
+                        {selectedMainCategory && availableSubcategories.length > 0 && (
+                            <TextField
+                                label="Subcategory"
+                                select
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                                required
+                                value={category}
+                                onChange={(e) => handleSubcategoryChange(e.target.value)}
+                            >
+                                {availableSubcategories.map((subcat) => (
+                                    <MenuItem value={subcat.name} key={subcat.name}>
+                                        {subcat.name}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        )}
+                        {selectedSubcategory && availableItems.length > 0 && (
+                            <TextField
+                                label="Subcategory Item"
+                                select
+                                fullWidth
+                                variant="outlined"
+                                size="small"
+                                value={subcategory}
+                                onChange={(e) => setSubcategory(e.target.value)}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {availableItems.map((item, idx) => (
+                                    <MenuItem value={item} key={`${item}-${idx}`}>
+                                        {item}
+                                    </MenuItem>
+                                ))}
+                            </TextField>
+                        )}
                         <TextField
                             label="Stock"
                             type="number"
