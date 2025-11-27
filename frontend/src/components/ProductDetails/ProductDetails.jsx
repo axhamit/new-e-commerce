@@ -15,6 +15,9 @@ import VerifiedUserIcon from '@mui/icons-material/VerifiedUser';
 import CachedIcon from '@mui/icons-material/Cached';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import DiamondIcon from '@mui/icons-material/Diamond';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import SecurityIcon from '@mui/icons-material/Security';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -64,16 +67,16 @@ const ProductDetails = () => {
     const addToWishlistHandler = () => {
         if (itemInWishlist) {
             dispatch(removeFromWishlist(productId));
-            enqueueSnackbar("Remove From Wishlist", { variant: "success" });
+            enqueueSnackbar("Removed from Wishlist", { variant: "success" });
         } else {
             dispatch(addToWishlist(productId));
-            enqueueSnackbar("Added To Wishlist", { variant: "success" });
+            enqueueSnackbar("Added to Wishlist", { variant: "success" });
         }
     }
 
     const reviewSubmitHandler = () => {
         if (rating === 0 || !comment.trim()) {
-            enqueueSnackbar("Empty Review", { variant: "error" });
+            enqueueSnackbar("Please provide rating and comment", { variant: "error" });
             return;
         }
         const formData = new FormData();
@@ -86,7 +89,7 @@ const ProductDetails = () => {
 
     const addToCartHandler = () => {
         dispatch(addItemsToCart(productId));
-        enqueueSnackbar("Product Added To Cart", { variant: "success" });
+        enqueueSnackbar("Product Added to Cart", { variant: "success" });
     }
 
     const handleDialogClose = () => {
@@ -131,253 +134,295 @@ const ProductDetails = () => {
                 <>
                     <MetaData title={product.name} />
                     <MinCategory />
-                    <main className="mt-12 sm:mt-0">
+                    <main className="mt-16 sm:mt-4 bg-gray-50 min-h-screen">
 
-                        {/* <!-- product image & description container --> */}
-                        <div className="w-full flex flex-col sm:flex-row bg-white sm:p-2 relative">
+                        {/* Main Product Container */}
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
-                            {/* <!-- image wrapper --> */}
-                            <div className="w-full sm:w-2/5 sm:sticky top-16 sm:h-screen">
-                                {/* <!-- imgbox --> */}
-                                <div className="flex flex-col gap-3 m-3">
-                                    <div className="w-full h-full pb-6 border relative">
+                            {/* Product Grid */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+
+                                {/* Image Section */}
+                                <div className="bg-white rounded-2xl shadow-lg p-6">
+                                    <div className="relative">
                                         <Slider {...settings}>
                                             {product.images && product.images.map((item, i) => (
-                                                <img draggable="false" className="w-full h-96 object-contain" src={item.url} alt={product.name} key={i} />
+                                                <div key={i} className="flex items-center justify-center p-4">
+                                                    <img 
+                                                        draggable="false" 
+                                                        className="w-full h-80 lg:h-96 object-contain" 
+                                                        src={item.url} 
+                                                        alt={product.name} 
+                                                    />
+                                                </div>
                                             ))}
                                         </Slider>
-                                        <div className="absolute top-4 right-4 shadow-lg bg-white w-9 h-9 border flex items-center justify-center rounded-full">
-                                            <span onClick={addToWishlistHandler} className={`${itemInWishlist ? "text-red-500" : "hover:text-red-500 text-gray-300"} cursor-pointer`}><FavoriteIcon sx={{ fontSize: "18px" }} /></span>
+                                        
+                                        {/* Wishlist Button */}
+                                        <button 
+                                            onClick={addToWishlistHandler}
+                                            className={`absolute top-4 right-4 w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 shadow-lg backdrop-blur-sm border ${
+                                                itemInWishlist 
+                                                    ? "bg-gradient-to-br from-red-500 to-pink-600 text-white scale-110 border-red-400/50" 
+                                                    : "bg-white/90 text-gray-400 hover:bg-gradient-to-br hover:from-red-500 hover:to-pink-600 hover:text-white hover:scale-110 border-gray-200/80"
+                                            }`}
+                                        >
+                                            <FavoriteIcon sx={{ fontSize: "20px" }} />
+                                        </button>
+
+                                        {/* Premium Badge */}
+                                        <div className="absolute top-4 left-4">
+                                            <div className="bg-gradient-to-r from-amber-500 to-rose-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg border border-amber-300/50 backdrop-blur-sm flex items-center gap-1">
+                                                <DiamondIcon sx={{ fontSize: "12px" }} />
+                                                <span>PREMIUM</span>
+                                            </div>
                                         </div>
                                     </div>
 
-                                    <div className="w-full flex gap-3">
-                                        {/* <!-- add to cart btn --> */}
+                                    {/* Action Buttons */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                                         {product.stock > 0 && (
-                                            <button onClick={itemInCart ? goToCart : addToCartHandler} className="p-4 w-1/2 flex items-center justify-center gap-2 text-white bg-primary-yellow rounded-sm shadow hover:shadow-lg">
-                                                <ShoppingCartIcon />
+                                            <button 
+                                                onClick={itemInCart ? goToCart : addToCartHandler}
+                                                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-4 rounded-xl font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3"
+                                            >
+                                                <ShoppingCartIcon sx={{ fontSize: "24px" }} />
                                                 {itemInCart ? "GO TO CART" : "ADD TO CART"}
                                             </button>
                                         )}
-                                        <button onClick={buyNow} disabled={product.stock < 1 ? true : false} className={product.stock < 1 ? "p-4 w-full flex items-center justify-center gap-2 text-white bg-red-600 cursor-not-allowed rounded-sm shadow hover:shadow-lg" : "p-4 w-1/2 flex items-center justify-center gap-2 text-white bg-primary-orange rounded-sm shadow hover:shadow-lg"}>
-                                            <FlashOnIcon />
+                                        <button 
+                                            onClick={buyNow} 
+                                            disabled={product.stock < 1}
+                                            className={`w-full py-4 rounded-xl font-semibold text-lg shadow-lg transition-all duration-300 flex items-center justify-center gap-3 ${
+                                                product.stock < 1 
+                                                    ? "bg-gray-400 text-white cursor-not-allowed" 
+                                                    : "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white hover:shadow-xl"
+                                            }`}
+                                        >
+                                            <FlashOnIcon sx={{ fontSize: "24px" }} />
                                             {product.stock < 1 ? "OUT OF STOCK" : "BUY NOW"}
                                         </button>
-                                        {/* <!-- add to cart btn --> */}
                                     </div>
-
                                 </div>
-                                {/* <!-- imgbox --> */}
-                            </div>
-                            {/* <!-- image wrapper --> */}
 
-                            {/* <!-- product desc wrapper --> */}
-                            <div className="flex-1 py-2 px-3">
-
-                                {/* <!-- whole product description --> */}
-                                <div className="flex flex-col gap-2 mb-4">
-
-                                    <h2 className="text-xl">{product.name}</h2>
-                                    {/* <!-- rating badge --> */}
-                                    <span className="text-sm text-gray-500 font-medium flex gap-2 items-center">
-                                        <span className="text-xs px-1.5 py-0.5 bg-primary-green rounded-sm text-white flex items-center gap-0.5">{product.ratings && product.ratings.toFixed(1)} <StarIcon sx={{ fontSize: "12px" }} /></span>
-                                        <span>{product.numOfReviews} Reviews</span>
-                                    </span>
-                                    {/* <!-- rating badge --> */}
-
-                                    {/* <!-- price desc --> */}
-                                    <span className="text-primary-green text-sm font-medium">Special Price</span>
-                                    <div className="flex items-baseline gap-2 text-3xl font-medium">
-                                        <span className="text-gray-800">₹{product.price?.toLocaleString()}</span>
-                                        <span className="text-base text-gray-500 line-through">₹{product.cuttedPrice?.toLocaleString()}</span>
-                                        <span className="text-base text-primary-green">{getDiscount(product.price, product.cuttedPrice)}%&nbsp;off</span>
+                                {/* Product Info Section */}
+                                <div className="bg-white rounded-2xl shadow-lg p-6 lg:p-8">
+                                    {/* Product Title & Rating */}
+                                    <div className="mb-6">
+                                        <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3">{product.name}</h1>
+                                        <div className="flex items-center gap-4 mb-4">
+                                            <div className="flex items-center gap-2 bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 px-3 py-1.5 rounded-xl text-sm font-semibold border border-green-200">
+                                                <StarIcon sx={{ fontSize: "16px", color: "#F59E0B" }} />
+                                                <span className="font-bold">{product.ratings?.toFixed(1)}</span>
+                                            </div>
+                                            <span className="text-gray-600 text-sm">({product.numOfReviews} Reviews)</span>
+                                        </div>
                                     </div>
-                                    {product.stock <= 10 && product.stock > 0 && (
-                                        <span className="text-red-500 text-sm font-medium">Hurry, Only {product.stock} left!</span>
+
+                                    {/* Pricing */}
+                                    <div className="mb-6">
+                                        <div className="flex items-baseline gap-3 mb-2">
+                                            <span className="text-3xl lg:text-4xl font-bold text-gray-900">₹{product.price?.toLocaleString()}</span>
+                                            <span className="text-lg text-gray-500 line-through">₹{product.cuttedPrice?.toLocaleString()}</span>
+                                            <span className="text-lg font-bold text-green-600">{getDiscount(product.price, product.cuttedPrice)}% OFF</span>
+                                        </div>
+                                        {product.stock <= 10 && product.stock > 0 && (
+                                            <div className="text-red-500 font-semibold text-sm bg-red-50 px-3 py-1 rounded-full inline-block">
+                                                ⚡ Only {product.stock} left in stock!
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Delivery Info */}
+                                    <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                                        <div className="flex items-center gap-3">
+                                            <CalendarTodayIcon sx={{ fontSize: "20px", color: "#3B82F6" }} />
+                                            <div>
+                                                <p className="font-semibold text-gray-900">Free Delivery</p>
+                                                <p className="text-sm text-gray-600">Delivery by {getDeliveryDate()}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Highlights */}
+                                    <div className="mb-6">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Product Highlights</h3>
+                                        <ul className="grid grid-cols-1 gap-2">
+                                            {product.highlights?.map((highlight, i) => (
+                                                <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
+                                                    <div className="w-2 h-2 bg-gradient-to-r from-amber-500 to-rose-500 rounded-full"></div>
+                                                    {highlight}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+
+                                    {/* Services */}
+                                    <div className="mb-6">
+                                        <h3 className="text-lg font-semibold text-gray-900 mb-3">Services & Support</h3>
+                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <SecurityIcon sx={{ fontSize: "20px", color: "#10B981" }} />
+                                                <span className="text-sm font-medium">{product.warranty} Year Warranty</span>
+                                            </div>
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <CachedIcon sx={{ fontSize: "20px", color: "#3B82F6" }} />
+                                                <span className="text-sm font-medium">7 Days Replacement</span>
+                                            </div>
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <CurrencyRupeeIcon sx={{ fontSize: "20px", color: "#8B5CF6" }} />
+                                                <span className="text-sm font-medium">Cash on Delivery</span>
+                                            </div>
+                                            <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+                                                <VerifiedUserIcon sx={{ fontSize: "20px", color: "#F59E0B" }} />
+                                                <span className="text-sm font-medium">Brand Authentic</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Brand Info */}
+                                    {product.brand && (
+                                        <div className="flex items-center gap-4 p-4 bg-gray-50 rounded-xl">
+                                            <img 
+                                                draggable="false" 
+                                                className="w-16 h-8 object-contain" 
+                                                src={product.brand.logo?.url} 
+                                                alt={product.brand.name} 
+                                            />
+                                            <div>
+                                                <p className="font-semibold text-gray-900">Sold by {product.brand.name}</p>
+                                                <p className="text-sm text-gray-600">Authorized Brand Partner</p>
+                                            </div>
+                                        </div>
                                     )}
-                                    {/* <!-- price desc --> */}
+                                </div>
+                            </div>
 
-                                    {/* <!-- banks offers --> */}
-                                    <p className="text-md font-medium">Available offers</p>
-                                    {Array(3).fill("").map((el, i) => (
-                                        <p className="text-sm flex items-center gap-1" key={i}>
-                                            <span className="text-primary-lightGreen"><LocalOfferIcon sx={{ fontSize: "20px" }} /></span>
-                                            <span className="font-medium ml-2">Bank Offer</span> 15% Instant discount on first Flipkart Pay Later order of 500 and above <Link className="text-primary-blue font-medium" to="/">T&C</Link>
-                                        </p>
-                                    ))}
-                                    {/* <!-- banks offers --> */}
+                            {/* Additional Details Sections */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
 
-                                    {/* <!-- warranty & brand --> */}
-                                    <div className="flex gap-8 mt-2 items-center text-sm">
-                                        <img draggable="false" className="w-20 h-8 p-0.5 border object-contain" src={product.brand?.logo.url} alt={product.brand && product.brand.name} />
-                                        <span>{product.warranty} Year Warranty <Link className="font-medium text-primary-blue" to="/">Know More</Link></span>
-                                    </div>
-                                    {/* <!-- warranty & brand --> */}
+                                {/* Description */}
+                                <div className="bg-white rounded-2xl shadow-lg p-6">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-4">Product Description</h2>
+                                    <p className="text-gray-700 leading-relaxed">{product.description}</p>
+                                </div>
 
-                                    {/* <!-- delivery details --> */}
-                                    <div className="flex gap-16 mt-4 items-center text-sm font-medium">
-                                        <p className="text-gray-500">Delivery</p>
-                                        <span>Delivery by {getDeliveryDate()}</span>
-                                    </div>
-                                    {/* <!-- delivery details --> */}
-
-                                    {/* <!-- highlights & services details --> */}
-                                    <div className="flex flex-col sm:flex-row justify-between">
-                                        {/* <!-- highlights details --> */}
-                                        <div className="flex gap-16 mt-4 items-stretch text-sm">
-                                            <p className="text-gray-500 font-medium">Highlights</p>
-
-                                            <ul className="list-disc flex flex-col gap-2 w-64">
-                                                {product.highlights?.map((highlight, i) => (
-                                                    <li key={i}>
-                                                        <p>{highlight}</p>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                        {/* <!-- highlights details --> */}
-
-                                        {/* <!-- services details --> */}
-                                        <div className="flex gap-16 mt-4 mr-6 items-stretch text-sm">
-                                            <p className="text-gray-500 font-medium">Services</p>
-                                            <ul className="flex flex-col gap-2">
-                                                <li>
-                                                    <p className="flex items-center gap-3"><span className="text-primary-blue"><VerifiedUserIcon sx={{ fontSize: "18px" }} /></span> {product.warranty} Year</p>
-                                                </li>
-                                                <li>
-                                                    <p className="flex items-center gap-3"><span className="text-primary-blue"><CachedIcon sx={{ fontSize: "18px" }} /></span> 7 Days Replacement Policy</p>
-                                                </li>
-                                                <li>
-                                                    <p className="flex items-center gap-3"><span className="text-primary-blue"><CurrencyRupeeIcon sx={{ fontSize: "18px" }} /></span> Cash on Delivery available</p>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        {/* <!-- services details --> */}
-                                    </div>
-                                    {/* <!-- highlights & services details --> */}
-
-                                    {/* <!-- seller details --> */}
-                                    <div className="flex gap-16 mt-4 items-center text-sm font-medium">
-                                        <p className="text-gray-500">Seller</p>
-                                        <Link className="font-medium text-primary-blue ml-3" to="/">{product.brand && product.brand.name}</Link>
-                                    </div>
-                                    {/* <!-- seller details --> */}
-
-                                    {/* <!-- flipkart plus banner --> */}
-                                    <div className="sm:w-1/2 mt-4 border">
-                                        <img draggable="false" className="w-full h-full object-contain" src="https://rukminim1.flixcart.com/lockin/763/305/images/promotion_banner_v2_active.png" alt="" />
-                                    </div>
-                                    {/* <!-- flipkart plus banner --> */}
-
-                                    {/* <!-- description details --> */}
-                                    <div className="flex flex-col sm:flex-row gap-1 sm:gap-14 mt-4 items-stretch text-sm">
-                                        <p className="text-gray-500 font-medium">Description</p>
-                                        <span>{product.description}</span>
-                                    </div>
-                                    {/* <!-- description details --> */}
-
-                                    {/* <!-- border box --> */}
-                                    <div className="w-full mt-6 rounded-sm border flex flex-col">
-                                        <h1 className="px-6 py-4 border-b text-2xl font-medium">Product Description</h1>
-                                        <div className="p-6">
-                                            <p className="text-sm">{product.description}</p>
-                                        </div>
-                                    </div>
-                                    {/* <!-- border box --> */}
-
-                                    {/* <!-- specifications border box --> */}
-                                    <div className="w-full mt-4 pb-4 rounded-sm border flex flex-col">
-                                        <h1 className="px-6 py-4 border-b text-2xl font-medium">Specifications</h1>
-                                        <h1 className="px-6 py-3 text-lg">General</h1>
-
-                                        {/* <!-- specs list --> */}
+                                {/* Specifications */}
+                                <div className="bg-white rounded-2xl shadow-lg p-6">
+                                    <h2 className="text-xl font-bold text-gray-900 mb-4">Specifications</h2>
+                                    <div className="space-y-3">
                                         {product.specifications?.map((spec, i) => (
-                                            <div className="px-6 py-2 flex items-center text-sm" key={i}>
-                                                <p className="text-gray-500 w-3/12">{spec.title}</p>
-                                                <p className="flex-1">{spec.description}</p>
+                                            <div key={i} className="flex justify-between items-center py-2 border-b border-gray-100">
+                                                <span className="text-sm font-medium text-gray-500">{spec.title}</span>
+                                                <span className="text-sm font-medium text-gray-900">{spec.description}</span>
                                             </div>
                                         ))}
-                                        {/* <!-- specs list --> */}
-
                                     </div>
-                                    {/* <!-- specifications border box --> */}
+                                </div>
+                            </div>
 
-                                    {/* <!-- reviews border box --> */}
-                                    <div className="w-full mt-4 rounded-sm border flex flex-col">
-                                        <div className="flex justify-between items-center border-b px-6 py-4">
-                                            <h1 className="text-2xl font-medium">Ratings & Reviews</h1>
-                                            <button onClick={handleDialogClose} className="shadow bg-primary-yellow text-white px-4 py-2 rounded-sm hover:shadow-lg">Rate Product</button>
+                            {/* Reviews Section */}
+                            <div className="bg-white rounded-2xl shadow-lg p-6 mb-12">
+                                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                                    <div>
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-2">Customer Reviews</h2>
+                                        <div className="flex items-center gap-4">
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-3xl font-bold text-gray-900">{product.ratings?.toFixed(1)}</span>
+                                                <StarIcon sx={{ fontSize: "24px", color: "#F59E0B" }} />
+                                            </div>
+                                            <span className="text-gray-600">({product.numOfReviews} reviews)</span>
                                         </div>
-
-                                        <Dialog
-                                            aria-labelledby='review-dialog'
-                                            open={open}
-                                            onClose={handleDialogClose}
-                                        >
-                                            <DialogTitle className="border-b">Submit Review</DialogTitle>
-                                            <DialogContent className="flex flex-col m-1 gap-4">
-                                                <Rating
-                                                    onChange={(e) => setRating(e.target.value)}
-                                                    value={rating}
-                                                    size='large'
-                                                    precision={0.5}
-                                                />
-                                                <TextField
-                                                    label="Review"
-                                                    multiline
-                                                    rows={3}
-                                                    sx={{ width: 400 }}
-                                                    size="small"
-                                                    variant="outlined"
-                                                    value={comment}
-                                                    onChange={(e) => setComment(e.target.value)}
-                                                />
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <button onClick={handleDialogClose} className="py-2 px-6 rounded shadow bg-white border border-red-500 hover:bg-red-100 text-red-600 uppercase">Cancel</button>
-                                                <button onClick={reviewSubmitHandler} className="py-2 px-6 rounded bg-green-600 hover:bg-green-700 text-white shadow uppercase">Submit</button>
-                                            </DialogActions>
-                                        </Dialog>
-
-                                        <div className="flex items-center border-b">
-                                            <h1 className="px-6 py-3 text-3xl font-semibold">{product.ratings && product.ratings.toFixed(1)}<StarIcon /></h1>
-                                            <p className="text-lg text-gray-500">({product.numOfReviews}) Reviews</p>
-                                        </div>
-
-                                        {viewAll ?
-                                            product.reviews?.map((rev, i) => (
-                                                <div className="flex flex-col gap-2 py-4 px-6 border-b" key={i}>
-                                                    <Rating name="read-only" value={rev.rating} readOnly size="small" precision={0.5} />
-                                                    <p>{rev.comment}</p>
-                                                    <span className="text-sm text-gray-500">by {rev.name}</span>
-                                                </div>
-                                            )).reverse()
-                                            :
-                                            product.reviews?.slice(-3).map((rev, i) => (
-                                                <div className="flex flex-col gap-2 py-4 px-6 border-b" key={i}>
-                                                    <Rating name="read-only" value={rev.rating} readOnly size="small" precision={0.5} />
-                                                    <p>{rev.comment}</p>
-                                                    <span className="text-sm text-gray-500">by {rev.name}</span>
-                                                </div>
-                                            )).reverse()
-                                        }
-                                        {product.reviews?.length > 3 &&
-                                            <button onClick={() => setViewAll(!viewAll)} className="w-1/3 m-2 rounded-sm shadow hover:shadow-lg py-2 bg-primary-blue text-white">{viewAll ? "View Less" : "View All"}</button>
-                                        }
                                     </div>
-                                    {/* <!-- reviews border box --> */}
-
+                                    <button 
+                                        onClick={handleDialogClose}
+                                        className="bg-gradient-to-r from-amber-600 to-rose-600 hover:from-amber-700 hover:to-rose-700 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 mt-4 sm:mt-0"
+                                    >
+                                        Write a Review
+                                    </button>
                                 </div>
 
+                                {/* Review Dialog */}
+                                <Dialog
+                                    aria-labelledby='review-dialog'
+                                    open={open}
+                                    onClose={handleDialogClose}
+                                    PaperProps={{
+                                        sx: { borderRadius: '16px', padding: '8px' }
+                                    }}
+                                >
+                                    <DialogTitle className="text-xl font-bold text-gray-900 border-b pb-4">
+                                        Write a Review
+                                    </DialogTitle>
+                                    <DialogContent className="flex flex-col gap-6 mt-4">
+                                        <div>
+                                            <p className="text-sm font-medium text-gray-700 mb-2">Your Rating</p>
+                                            <Rating
+                                                onChange={(e) => setRating(parseFloat(e.target.value))}
+                                                value={rating}
+                                                size='large'
+                                                precision={0.5}
+                                                sx={{ fontSize: '32px' }}
+                                            />
+                                        </div>
+                                        <TextField
+                                            label="Your Review"
+                                            multiline
+                                            rows={4}
+                                            size="medium"
+                                            variant="outlined"
+                                            value={comment}
+                                            onChange={(e) => setComment(e.target.value)}
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '12px',
+                                                }
+                                            }}
+                                        />
+                                    </DialogContent>
+                                    <DialogActions className="gap-3 p-6">
+                                        <button 
+                                            onClick={handleDialogClose}
+                                            className="px-6 py-2.5 rounded-xl border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition-colors"
+                                        >
+                                            Cancel
+                                        </button>
+                                        <button 
+                                            onClick={reviewSubmitHandler}
+                                            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 text-white font-medium hover:shadow-lg transition-all duration-300"
+                                        >
+                                            Submit Review
+                                        </button>
+                                    </DialogActions>
+                                </Dialog>
+
+                                {/* Reviews List */}
+                                <div className="space-y-6">
+                                    {(viewAll ? product.reviews : product.reviews?.slice(-3))?.map((rev, i) => (
+                                        <div key={i} className="p-4 border border-gray-200 rounded-xl">
+                                            <div className="flex items-center gap-4 mb-3">
+                                                <Rating value={rev.rating} readOnly size="small" precision={0.5} />
+                                                <span className="text-sm text-gray-500">by {rev.name}</span>
+                                            </div>
+                                            <p className="text-gray-700">{rev.comment}</p>
+                                        </div>
+                                    )).reverse()}
+
+                                    {product.reviews?.length > 3 && (
+                                        <button 
+                                            onClick={() => setViewAll(!viewAll)}
+                                            className="w-full sm:w-auto px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                                        >
+                                            {viewAll ? "Show Less Reviews" : "View All Reviews"}
+                                        </button>
+                                    )}
+                                </div>
                             </div>
-                            {/* <!-- product desc wrapper --> */}
 
-                        </div>
-                        {/* <!-- product image & description container --> */}
-
-                        {/* Sliders */}
-                        <div className="flex flex-col gap-3 mt-6">
-                            <ProductSlider title={"Similar Products"} tagline={"Based on the category"} />
+                            {/* Similar Products */}
+                            <div className="mb-8">
+                                <ProductSlider title={"Similar Products"} tagline={"You might also like"} />
+                            </div>
                         </div>
 
                     </main>
