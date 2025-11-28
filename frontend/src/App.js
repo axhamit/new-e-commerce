@@ -37,6 +37,7 @@ import ReviewsTable from './components/Admin/ReviewsTable';
 import CategoryTable from './components/Admin/CategoryTable';
 import Wishlist from './components/Wishlist/Wishlist';
 import NotFound from './components/NotFound';
+import OAuthCallback from './components/User/OAuthCallback';
 
 function App() {
 
@@ -73,11 +74,12 @@ function App() {
 
   // disable right click
   window.addEventListener("contextmenu", (e) => e.preventDefault());
-  window.addEventListener("keydown", (e) => {
-    if (e.keyCode == 123) e.preventDefault();
+// In your App.js, find this section and fix the first condition:
+window.addEventListener("keydown", (e) => {
+    if (e.keyCode === 123) e.preventDefault(); // Changed == to ===
     if (e.ctrlKey && e.shiftKey && e.keyCode === 73) e.preventDefault();
     if (e.ctrlKey && e.shiftKey && e.keyCode === 74) e.preventDefault();
-  });
+});
   
   return (
     <>
@@ -86,6 +88,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/oauth-callback" element={<OAuthCallback />} /> {/* ADD THIS ROUTE */}
 
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/products" element={<Products />} />
