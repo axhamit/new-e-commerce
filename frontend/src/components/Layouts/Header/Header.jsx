@@ -212,10 +212,19 @@ const Header = () => {
             <Searchbar />
           </div>
         )}
+      </div>
 
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <div className="lg:hidden bg-white/95 backdrop-blur-xl rounded-3xl mt-2 p-6 border border-gray-200 shadow-2xl animate-fade-in">
+      {/* Mobile Menu Overlay and Content */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Background Blur Overlay */}
+          <div 
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 lg:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+          
+          {/* Mobile Menu Content */}
+          <div className="fixed top-20 left-4 right-4 bg-white/95 backdrop-blur-xl rounded-3xl p-6 border border-gray-200 shadow-2xl z-50 animate-fade-in lg:hidden">
             <div className="flex flex-col space-y-4">
               
               {/* User Info if authenticated */}
@@ -296,15 +305,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-        )}
-      </div>
-
-      {/* Background Blur Overlay for Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div 
-          className="fixed inset-0 bg-black/10 backdrop-blur-sm z-40 lg:hidden"
-          onClick={() => setIsMobileMenuOpen(false)}
-        />
+        </>
       )}
     </header>
   );
