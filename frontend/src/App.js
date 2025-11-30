@@ -38,6 +38,7 @@ import CategoryTable from './components/Admin/CategoryTable';
 import Wishlist from './components/Wishlist/Wishlist';
 import NotFound from './components/NotFound';
 import OAuthCallback from './components/User/OAuthCallback';
+import About from './components/about/about';
 
 function App() {
 
@@ -95,7 +96,7 @@ window.addEventListener("keydown", (e) => {
         <Route path="/products/:keyword" element={<Products />} />
 
         <Route path="/cart" element={<Cart />} />
-
+<Route path="/about" element={<About />} />
         {/* order process */}
         <Route path="/shipping" element={
           <ProtectedRoute>

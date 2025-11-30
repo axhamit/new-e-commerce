@@ -1,116 +1,152 @@
 import { useEffect, useState } from 'react';
-import WorkIcon from '@mui/icons-material/Work';
-import StarsIcon from '@mui/icons-material/Stars';
-import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
-import HelpIcon from '@mui/icons-material/Help';
+import { Link, useLocation } from 'react-router-dom';
+import DiamondIcon from '@mui/icons-material/Diamond';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import XIcon from '@mui/icons-material/X';
+import PinterestIcon from '@mui/icons-material/Pinterest';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import paymentMethods from '../../../assets/images/payment-methods.svg';
-import { useLocation } from 'react-router-dom';
 
 const footerLinks = [
   {
-    title: "about",
+    title: "DISCOVER",
     links: [
       {
-        name: "Contact Us",
-        redirect: "https://www.flipkart.com/helpcentre",
+        name: "New Arrivals",
+        redirect: "/products?category=new-arrivals",
       },
       {
-        name: "About Us",
-        redirect: "https://www.flipkart.com/about-us",
+        name: "Designer Collection",
+        redirect: "/products?category=designer",
       },
       {
-        name: "Careers",
-        redirect: "https://www.flipkartcareers.com",
+        name: "Seasonal Edit",
+        redirect: "/products?season=spring-summer",
       },
       {
-        name: "Flipkart Stories",
-        redirect: "https://stories.flipkart.com",
+        name: "Best Sellers",
+        redirect: "/products?sort=-ratings",
       },
       {
-        name: "Press",
-        redirect: "https://stories.flipkart.com/category/top-stories/news",
+        name: "Gift Cards",
+        redirect: "/gift-cards",
       },
       {
-        name: "Flipkart Wholesale",
-        redirect: "https://www.flipkartwholesale.com",
-      },
-      {
-        name: "Corporate Information",
-        redirect: "https://www.flipkart.com/corporate-information",
-      },
-    ]
-  },
-  {
-    title: "help",
-    links: [
-      {
-        name: "Payments",
-        redirect: "https://www.flipkart.com/pages/payments",
-      },
-      {
-        name: "Shipping",
-        redirect: "https://www.flipkart.com/pages/shipping",
-      },
-      {
-        name: "Cancellation & Returns",
-        redirect: "https://www.flipkart.com/helpcentre?catalog=55c9c6edb000002e002c1701&view=CATALOG",
-      },
-      {
-        name: "FAQ",
-        redirect: "https://www.flipkart.com/helpcentre?catalog=55c9c8e2b0000023002c1702&view=CATALOG",
+        name: "Lookbook",
+        redirect: "/lookbook",
       }
     ]
   },
   {
-    title: "policy",
+    title: "SERVICES",
     links: [
       {
-        name: "Return Policy",
-        redirect: "https://www.flipkart.com/pages/returnpolicy",
+        name: "Personal Styling",
+        redirect: "/services/styling",
       },
       {
-        name: "Terms Of Use",
-        redirect: "https://www.flipkart.com/pages/terms",
+        name: "Tailoring Services",
+        redirect: "/services/tailoring",
       },
       {
-        name: "Security",
-        redirect: "https://www.flipkart.com/pages/paymentsecurity",
+        name: "VIP Access",
+        redirect: "/vip-program",
       },
       {
-        name: "Privacy",
-        redirect: "https://www.flipkart.com/pages/privacypolicy",
-      },
-      {
-        name: "Sitemap",
-        redirect: "https://www.flipkart.com/sitemap",
-      },
-      {
-        name: "EPR Compliance",
-        redirect: "https://www.flipkart.com/pages/ewaste-compliance-tnc",
-      },
+        name: "Style Consultation",
+        redirect: "/consultation",
+      }
     ]
   },
   {
-    title: "social",
+    title: "COMPANY",
     links: [
       {
-        name: "Facebook",
-        redirect: "https://www.facebook.com/flipkart",
+        name: "Our Story",
+        redirect: "/about",
       },
       {
-        name: "Twitter",
-        redirect: "https://twitter.com/flipkart",
+        name: "Sustainability",
+        redirect: "/sustainability",
       },
       {
-        name: "YouTube",
-        redirect: "https://www.youtube.com/flipkart",
+        name: "Careers",
+        redirect: "/careers",
+      },
+      {
+        name: "Press",
+        redirect: "/press",
+      },
+      {
+        name: "Privacy Policy",
+        redirect: "/privacy",
+      },
+      {
+        name: "Terms of Service",
+        redirect: "/terms",
+      }
+    ]
+  },
+  {
+    title: "CLIENT CARE",
+    links: [
+      {
+        name: "Contact Us",
+        redirect: "/contact",
+      },
+      {
+        name: "Shipping & Returns",
+        redirect: "/shipping-returns",
+      },
+      {
+        name: "Size Guide",
+        redirect: "/size-guide",
+      },
+      {
+        name: "Care Instructions",
+        redirect: "/care-instructions",
+      },
+      {
+        name: "FAQ",
+        redirect: "/faq",
       }
     ]
   }
 ]
 
-const Footer = () => {
+const socialLinks = [
+  {
+    name: "Instagram",
+    icon: <InstagramIcon sx={{ fontSize: 20 }} />,
+    redirect: "https://instagram.com/aarohama-tresure",
+  },
+  {
+    name: "Facebook",
+    icon: <FacebookIcon sx={{ fontSize: 20 }} />,
+    redirect: "https://facebook.com/aarohama-tresure",
+  },
+  {
+    name: "Pinterest",
+    icon: <PinterestIcon sx={{ fontSize: 20 }} />,
+    redirect: "https://pinterest.com/aarohama-tresure",
+  },
+  {
+    name: "X",
+    icon: <XIcon sx={{ fontSize: 20 }} />,
+    redirect: "https://twitter.com/aarohama-tresure",
+  },
+  {
+    name: "YouTube",
+    icon: <YouTubeIcon sx={{ fontSize: 20 }} />,
+    redirect: "https://youtube.com/aarohama-tresure",
+  }
+]
 
+const Footer = () => {
   const location = useLocation();
   const [adminRoute, setAdminRoute] = useState(false);
 
@@ -122,67 +158,170 @@ const Footer = () => {
     <>
       {!adminRoute && (
         <>
-          <footer className="mt-20 w-full py-1 sm:py-4 px-4 sm:px-12 bg-primary-darkBlue text-white text-xs border-b border-gray-600 flex flex-col sm:flex-row overflow-hidden">
-            <div className="w-full sm:w-7/12 flex flex-col sm:flex-row">
+          {/* Main Footer */}
+          <footer className="w-full bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white border-t border-gray-800 overflow-hidden">
+            {/* Luxury Accent Bar */}
+            <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 h-1 w-full"></div>
+            
+            <div className="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-16">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 mb-12">
+                {/* Brand Section */}
+                <div className="space-y-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
+                      <DiamondIcon sx={{ fontSize: 24, color: 'white' }} />
+                    </div>
+                    <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 via-pink-200 to-rose-200 bg-clip-text text-transparent">
+                      Aarohama Tresure
+                    </span>
+                  </div>
+                  <p className="text-gray-300 font-light text-lg leading-relaxed max-w-md">
+                    Curating exceptional luxury fashion experiences with meticulous attention to detail and unparalleled craftsmanship.
+                  </p>
+                  
+                  {/* Contact Info */}
+                  <div className="space-y-3">
+                    <div className="flex items-center space-x-3 text-gray-300">
+                      <PhoneIcon sx={{ fontSize: 18, color: '#6B7280' }} />
+                      <span className="font-light">+1 (555) 123-4567</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-gray-300">
+                      <EmailIcon sx={{ fontSize: 18, color: '#6B7280' }} />
+                      <span className="font-light">style@aarohamatresure.com</span>
+                    </div>
+                    <div className="flex items-start space-x-3 text-gray-300">
+                      <LocationOnIcon sx={{ fontSize: 18, color: '#6B7280', marginTop: '2px' }} />
+                      <span className="font-light">123 Luxury Avenue<br />Fashion District, NY 10001</span>
+                    </div>
+                  </div>
 
-              {footerLinks.map((el, i) => (
-                <div className="w-full sm:w-1/5 flex flex-col gap-2 my-3 sm:my-6 ml-5" key={i}>
-                  <h2 className="text-primary-grey mb-2 uppercase">{el.title}</h2>
-                  {el.links.map((item, i) => (
-                    <a href={item.redirect} target="_blank" rel="noreferrer" className="hover:underline" key={i}>{item.name}</a>
-                  ))}
-
+                  {/* Social Links */}
+                  <div className="flex space-x-4 pt-4">
+                    {socialLinks.map((social, index) => (
+                      <a
+                        key={index}
+                        href={social.redirect}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-10 h-10 bg-gray-800 hover:bg-gradient-to-r from-purple-600 to-pink-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110 border border-gray-700"
+                        aria-label={social.name}
+                      >
+                        {social.icon}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              ))}
 
-            </div>
-
-            <div className="border-gray-600 h-36 w-1 border-l mr-5 mt-6 hidden sm:block"></div>
-            <div className="w-full sm:w-5/12 my-6 mx-5 sm:mx-0 flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between">
-              <div className="w-full sm:w-1/2">
-                <h2 className="text-primary-grey">Mail Us:</h2>
-                <p className="mt-2 leading-5">Flipkart Internet Private Limited,<br />
-                  Buildings Alyssa, Begonia &<br />
-                  Clove Embassy Tech Village,<br />
-                  Outer Ring Road, Devarabeesanahalli Village,<br />
-                  Bengaluru, 560103,<br />
-                  Karnataka, India
-                </p>
+                {/* Links Grid */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                  {footerLinks.map((section, index) => (
+                    <div key={index} className="space-y-4">
+                      <h3 className="font-semibold text-purple-300 uppercase tracking-wider text-sm">
+                        {section.title}
+                      </h3>
+                      <ul className="space-y-3">
+                        {section.links.map((link, linkIndex) => (
+                          <li key={linkIndex}>
+                            <Link
+                              to={link.redirect}
+                              className="text-gray-300 hover:text-pink-200 font-light transition-colors duration-200 text-sm hover:underline"
+                            >
+                              {link.name}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              <div className="w-full sm:w-1/2">
-                <h2 className="text-primary-grey">Registered Office Address:</h2>
-                <p className="mt-2 leading-5">Flipkart Internet Private Limited,<br />
-                  Buildings Alyssa, Begonia &<br />
-                  Clove Embassy Tech Village,<br />
-                  Outer Ring Road, Devarabeesanahalli Village,<br />
-                  Bengaluru, 560103,<br />
-                  Karnataka, India <br />
-                  CIN : U51109KA2012PTC066107<br />
-                  Telephone: <a className="text-primary-blue" href="tel:18002029898">1800 202 9898</a>
-                </p>
+              {/* Newsletter Section */}
+              <div className="border-t border-gray-800 pt-8 mb-8">
+                <div className="max-w-md">
+                  <h3 className="font-semibold text-purple-300 mb-4 text-sm uppercase tracking-wider">
+                    Join Our Luxury Circle
+                  </h3>
+                  <p className="text-gray-300 font-light text-sm mb-4">
+                    Receive exclusive access to new collections, private sales, and style insights.
+                  </p>
+                  <div className="flex space-x-3">
+                    <input
+                      type="email"
+                      placeholder="Enter your email"
+                      className="flex-1 px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-white placeholder-gray-400 text-sm"
+                    />
+                    <button className="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-lg font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 text-sm">
+                      Subscribe
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom Bar */}
+              <div className="border-t border-gray-800 pt-8 flex flex-col lg:flex-row justify-between items-center space-y-6 lg:space-y-0">
+                <div className="flex items-center space-x-6 text-gray-400 text-sm">
+                  <span>&copy; {new Date().getFullYear()} Aarohama Tresure. All rights reserved.</span>
+                  <div className="flex space-x-4">
+                    <Link to="/privacy" className="hover:text-purple-300 transition-colors">Privacy</Link>
+                    <Link to="/terms" className="hover:text-purple-300 transition-colors">Terms</Link>
+                    <Link to="/cookies" className="hover:text-purple-300 transition-colors">Cookies</Link>
+                  </div>
+                </div>
+                
+                {/* Payment Methods */}
+                <div className="flex items-center space-x-4">
+                  <span className="text-gray-400 text-sm font-light">We Accept</span>
+                  <img 
+                    draggable="false" 
+                    src={paymentMethods} 
+                    alt="Accepted Payment Methods" 
+                    className="h-8 filter brightness-0 invert opacity-80"
+                  />
+                </div>
               </div>
             </div>
 
+            {/* Luxury Accent */}
+            <div className="bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 h-1 w-full"></div>
           </footer>
-          {/* <!-- footer ends --> */}
 
-          <div className="px-16 py-6 w-full bg-primary-darkBlue hidden sm:flex justify-between items-center text-sm text-white">
-            <a href="https://seller.flipkart.com/sell-online" target="_blank" rel="noreferrer" className="flex items-center gap-2">
-              <span className="text-yellow-400"><WorkIcon sx={{ fontSize: "20px" }} /></span> Sell On Flipkart
-            </a>
-            <a href="https://brands.flipkart.com" target="_blank" rel="noreferrer" className="flex items-center gap-2">
-              <span className="text-yellow-400"><StarsIcon sx={{ fontSize: "20px" }} /></span> Advertise
-            </a>
-            <a href="https://www.flipkart.com/the-gift-card-store" rel="noreferrer" target="_blank" className="flex items-center gap-2">
-              <span className="text-yellow-400"><CardGiftcardIcon sx={{ fontSize: "20px" }} /></span> Gift Cards
-            </a>
-            <a href="https://www.flipkart.com/helpcentre" target="_blank" rel="noreferrer" className="flex items-center gap-2">
-              <span className="text-yellow-400"><HelpIcon sx={{ fontSize: "20px" }} /></span> Help Center
-            </a>
-
-            <span>&copy; 2007-{new Date().getFullYear()} Flipkart.com</span>
-            <img draggable="false" src={paymentMethods} alt="Card Payment" />
+          {/* Trust Badges */}
+          <div className="w-full bg-gray-900 py-6 border-t border-gray-800">
+            <div className="max-w-7xl mx-auto px-6 lg:px-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-gray-300 text-sm">
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <DiamondIcon sx={{ fontSize: 16, color: 'white' }} />
+                  </div>
+                  <span className="font-light">Authentic Luxury</span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                  </div>
+                  <span className="font-light">Global Shipping</span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <span className="font-light">Secure Payment</span>
+                </div>
+                <div className="flex flex-col items-center space-y-2">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                    <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <span className="font-light">VIP Rewards</span>
+                </div>
+              </div>
+            </div>
           </div>
         </>
       )}
