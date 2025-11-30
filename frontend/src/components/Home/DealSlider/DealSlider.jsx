@@ -9,13 +9,19 @@ export const settings = {
     dots: false,
     infinite: false,
     speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 6,
-    initialSlide: 1,
-    swipe: false,
+    slidesToShow: 5,
+    slidesToScroll: 5,
+    swipe: true,
     prevArrow: <PreviousBtn />,
     nextArrow: <NextBtn />,
     responsive: [
+        {
+            breakpoint: 1280,
+            settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4
+            }
+        },
         {
             breakpoint: 1024,
             settings: {
@@ -24,7 +30,7 @@ export const settings = {
             }
         },
         {
-            breakpoint: 600,
+            breakpoint: 768,
             settings: {
                 slidesToShow: 2,
                 slidesToScroll: 2
@@ -42,22 +48,32 @@ export const settings = {
 
 const DealSlider = ({ title }) => {
     return (
-        <section className="bg-white w-full shadow overflow-hidden">
-            {/* <!-- header --> */}
-            <div className="flex px-6 py-3 justify-between items-center">
-                <h1 className="text-xl font-medium">{title}</h1>
-                <Link to="/products" className="bg-primary-blue text-xs font-medium text-white px-5 py-2.5 rounded-sm shadow-lg">VIEW ALL</Link>
+        <div className="w-full">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                <div>
+                    <h2 className="text-2xl lg:text-3xl font-bold text-gray-900">{title}</h2>
+                    {/* <p className="text-gray-600 text-sm mt-1">Curated selection of premium products</p> */}
+                </div>
+                {/* <Link 
+                    to="/products" 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-lg font-medium text-sm transition-colors shadow-sm hover:shadow-md"
+                >
+                    View All
+                </Link> */}
             </div>
-            <hr />
-            {/* <!-- header --> */}
 
-                <Slider {...settings}>
+            {/* Slider Container */}
+            <div className="relative">
+                <Slider {...settings} className="px-2">
                     {getRandomProducts(offerProducts, 12).map((item, i) => (
-                        <Product {...item} key={i} />
+                        <div key={i} className="px-2 py-1">
+                            <Product {...item} />
+                        </div>
                     ))}
                 </Slider>
-
-        </section>
+            </div>
+        </div>
     );
 };
 
