@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import TextField from '@mui/material/TextField'
+import TextField from '@mui/material/TextField';
 import { Avatar, FormControlLabel, Radio, RadioGroup } from '@mui/material';
 import { useSnackbar } from 'notistack';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,8 +9,16 @@ import { UPDATE_PROFILE_RESET } from '../../constants/userConstants';
 import BackdropLoader from '../Layouts/BackdropLoader';
 import MetaData from '../Layouts/MetaData';
 
-const UpdateProfile = () => {
+// Import Material-UI icons for consistency
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import DiamondIcon from '@mui/icons-material/Diamond';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
 
+const UpdateProfile = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { enqueueSnackbar } = useSnackbar();
@@ -64,106 +72,286 @@ const UpdateProfile = () => {
             enqueueSnackbar("Profile Updated Successfully", { variant: "success" });
             dispatch(loadUser());
             navigate('/account');
-
             dispatch({ type: UPDATE_PROFILE_RESET });
         }
     }, [dispatch, error, user, isUpdated, navigate, enqueueSnackbar]);
 
     return (
         <>
-            <MetaData title="Update Profile | Flipkart" />
+            <MetaData title="Update Profile | Aarohama Tresure" />
 
             {loading && <BackdropLoader />}
-            <main className="w-full mt-12 sm:pt-20 sm:mt-0">
+            <main className="min-h-screen bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/30 py-8 sm:py-12 px-4 sm:px-6 lg:px-8 mt-20">
 
-                {/* <!-- row --> */}
-                <div className="flex sm:w-4/6 sm:mt-4 m-auto mb-7 bg-white shadow-lg">
-                    {/* <!-- sidebar column  --> */}
-                    <div className="loginSidebar bg-primary-blue px-9 py-10 hidden sm:flex flex-col gap-4 w-2/5">
-                        <h1 className="font-medium text-white text-3xl">Looks like you're new here!</h1>
-                        <p className="text-gray-200 text-lg pr-2">Sign up with your mobile number to get started</p>
+                {/* Luxury Header Section */}
+                <div className="text-center mb-8 sm:mb-12">
+                    <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-50/80 via-pink-50/80 to-blue-50/80 backdrop-blur-xl rounded-2xl mb-4 border border-purple-200/50 shadow-lg">
+                        <PersonIcon sx={{ fontSize: 20, color: '#8B5CF6' }} className="mr-2" />
+                        <span className="text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 bg-clip-text font-bold text-sm tracking-widest uppercase">
+                            Profile Management
+                        </span>
+                        <EditIcon sx={{ fontSize: 20, color: '#EC4899' }} className="ml-2" />
                     </div>
-                    {/* <!-- sidebar column  --> */}
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+                        Update <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Profile</span>
+                    </h1>
+                    <p className="text-gray-600 text-lg font-light max-w-2xl mx-auto">
+                        Refine your personal details to enhance your luxury shopping experience
+                    </p>
+                </div>
 
-                    {/* <!-- signup column --> */}
-                    <div className="flex-1 overflow-hidden">
+                {/* Main Content Card */}
+                <div className="flex flex-col lg:flex-row max-w-6xl mx-auto bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border-2 border-purple-100 overflow-hidden">
 
-                        <h2 className="text-center text-2xl font-medium mt-6 text-gray-800">Update Profile</h2>
-                        {/* <!-- personal info procedure container --> */}
-                        <form
-                            onSubmit={updateProfileHandler}
-                            encType="multipart/form-data"
-                            className="p-5 sm:p-10"
-                        >
-                            <div className="flex flex-col gap-4 items-start">
+                    {/* Sidebar - Enhanced */}
+                    <div className="lg:w-2/5 bg-gradient-to-br from-purple-900 via-gray-900 to-black text-white p-8 lg:p-12 relative overflow-hidden">
+                        {/* Background Effects */}
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-purple-600/20 rounded-full blur-2xl"></div>
+                        <div className="absolute bottom-0 left-0 w-40 h-40 bg-pink-600/20 rounded-full blur-2xl"></div>
+                        
+                        <div className="relative z-10">
+                            <div className="flex items-center mb-8">
+                                <DiamondIcon sx={{ fontSize: 32, color: '#A855F7' }} className="mr-3" />
+                                <span className="text-2xl font-bold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent">
+                                    Aarohama Tresure
+                                </span>
+                            </div>
+                            
+                            <h2 className="text-3xl lg:text-4xl font-bold mb-6 leading-tight">
+                                Personalize Your <span className="text-purple-300">Luxury</span> Journey
+                            </h2>
+                            
+                            <p className="text-purple-100/80 text-lg mb-8 font-light leading-relaxed">
+                                Update your profile to receive personalized style recommendations, exclusive offers, and VIP treatment tailored just for you.
+                            </p>
 
-                                {/* <!-- input container column --> */}
-                                <div className="flex flex-col w-full justify-between sm:flex-col gap-3 items-center">
-                                    <TextField
-                                        fullWidth
-                                        label="Full Name"
-                                        name="name"
-                                        value={name}
-                                        onChange={(e) => setName(e.target.value)}
-                                        required
-                                    />
-                                    <TextField
-                                        fullWidth
-                                        label="Email"
-                                        type="email"
-                                        name="email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                {/* <!-- input container column --> */}
-
-                                {/* <!-- gender input --> */}
-                                <div className="flex gap-4 items-center">
-                                    <h2 className="text-md">Your Gender :</h2>
-                                    <div className="flex items-center gap-6" id="radioInput">
-                                        <RadioGroup
-                                            row
-                                            aria-labelledby="radio-buttons-group-label"
-                                            name="radio-buttons-group"
-                                        >
-                                            <FormControlLabel name="gender" value="male" checked={gender === "male"} onChange={(e) => setGender(e.target.value)} control={<Radio required />} label="Male" />
-                                            <FormControlLabel name="gender" value="female" checked={gender === "female"} onChange={(e) => setGender(e.target.value)} control={<Radio required />} label="Female" />
-                                        </RadioGroup>
+                            {/* Benefits List */}
+                            <div className="space-y-4">
+                                <div className="flex items-center">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                        <PersonIcon sx={{ fontSize: 20, color: 'white' }} />
                                     </div>
+                                    <span className="text-purple-100 font-medium">Personalized styling</span>
                                 </div>
-                                {/* <!-- gender input --> */}
+                                <div className="flex items-center">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                        <EditIcon sx={{ fontSize: 20, color: 'white' }} />
+                                    </div>
+                                    <span className="text-purple-100 font-medium">Tailored recommendations</span>
+                                </div>
+                                <div className="flex items-center">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-xl flex items-center justify-center mr-4 shadow-lg">
+                                        <DiamondIcon sx={{ fontSize: 20, color: 'white' }} />
+                                    </div>
+                                    <span className="text-purple-100 font-medium">VIP access & events</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                <div className="flex flex-col w-full justify-between sm:flex-row gap-3 items-center">
-                                    <Avatar
-                                        alt="Avatar Preview"
-                                        src={avatarPreview}
-                                        sx={{ width: 56, height: 56 }}
-                                    />
-                                    <label className="rounded font-medium bg-gray-400 text-center cursor-pointer text-white w-full py-2 px-2.5 shadow hover:shadow-lg">
-                                        <input
-                                            type="file"
-                                            name="avatar"
-                                            accept="image/*"
-                                            onChange={handleUpdateDataChange}
-                                            className="hidden"
-                                        />
-                                        Choose File
-                                    </label>
+                    {/* Form Section */}
+                    <div className="lg:w-3/5 p-8 sm:p-12">
+                        <div className="max-w-md mx-auto">
+                            {/* Form Header */}
+                            <div className="text-center mb-8">
+                                <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-2xl border-2 border-white/40 relative">
+                                    <PersonIcon sx={{ fontSize: 32, color: 'white' }} />
                                 </div>
-                                <button type="submit" className="text-white py-3 w-full bg-primary-orange shadow rounded-sm font-medium hover:shadow-lg">Update</button>
-                                <Link className="hover:bg-gray-100 text-primary-blue text-center py-3 w-full shadow border rounded-sm font-medium" to="/account">Cancel</Link>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                                    Your Profile Details
+                                </h3>
+                                <p className="text-gray-600 font-light">
+                                    Keep your information current for the best experience
+                                </p>
                             </div>
 
-                        </form>
-                        {/* <!-- personal info procedure container --> */}
+                            {/* Profile Form */}
+                            <form onSubmit={updateProfileHandler} encType="multipart/form-data" className="space-y-6">
+                                <div className="space-y-4">
+                                    {/* Name Field */}
+                                    <div className="group">
+                                        <TextField
+                                            fullWidth
+                                            label="Full Name"
+                                            name="name"
+                                            value={name}
+                                            onChange={(e) => setName(e.target.value)}
+                                            required
+                                            variant="outlined"
+                                            className="group-hover:shadow-lg transition-all duration-300"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '12px',
+                                                    backgroundColor: 'white',
+                                                    '&:hover fieldset': {
+                                                        borderColor: '#8B5CF6',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#8B5CF6',
+                                                    },
+                                                },
+                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                    color: '#8B5CF6',
+                                                }
+                                            }}
+                                        />
+                                    </div>
 
+                                    {/* Email Field */}
+                                    <div className="group">
+                                        <TextField
+                                            fullWidth
+                                            label="Email Address"
+                                            type="email"
+                                            name="email"
+                                            value={email}
+                                            onChange={(e) => setEmail(e.target.value)}
+                                            required
+                                            variant="outlined"
+                                            className="group-hover:shadow-lg transition-all duration-300"
+                                            sx={{
+                                                '& .MuiOutlinedInput-root': {
+                                                    borderRadius: '12px',
+                                                    backgroundColor: 'white',
+                                                    '&:hover fieldset': {
+                                                        borderColor: '#8B5CF6',
+                                                    },
+                                                    '&.Mui-focused fieldset': {
+                                                        borderColor: '#8B5CF6',
+                                                    },
+                                                },
+                                                '& .MuiInputLabel-root.Mui-focused': {
+                                                    color: '#8B5CF6',
+                                                }
+                                            }}
+                                        />
+                                    </div>
+
+                                    {/* Gender Selection */}
+                                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 rounded-2xl p-6 border border-purple-200">
+                                        <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+                                            <PersonIcon sx={{ fontSize: 20, color: '#8B5CF6' }} className="mr-2" />
+                                            Your Gender
+                                        </h4>
+                                        <RadioGroup
+                                            row
+                                            aria-labelledby="gender-radio-buttons-group"
+                                            name="gender"
+                                            value={gender}
+                                            onChange={(e) => setGender(e.target.value)}
+                                            className="justify-center sm:justify-start gap-6"
+                                        >
+                                            <FormControlLabel 
+                                                value="male" 
+                                                control={
+                                                    <Radio 
+                                                        required 
+                                                        icon={<MaleIcon />}
+                                                        checkedIcon={<MaleIcon sx={{ color: '#8B5CF6' }} />}
+                                                        sx={{
+                                                            color: '#D1D5DB',
+                                                            '&.Mui-checked': {
+                                                                color: '#8B5CF6',
+                                                            },
+                                                        }}
+                                                    />
+                                                } 
+                                                label={
+                                                    <span className="flex items-center text-gray-700">
+                                                        <MaleIcon sx={{ fontSize: 18, marginRight: 1 }} />
+                                                        Male
+                                                    </span>
+                                                } 
+                                            />
+                                            <FormControlLabel 
+                                                value="female" 
+                                                control={
+                                                    <Radio 
+                                                        required 
+                                                        icon={<FemaleIcon />}
+                                                        checkedIcon={<FemaleIcon sx={{ color: '#EC4899' }} />}
+                                                        sx={{
+                                                            color: '#D1D5DB',
+                                                            '&.Mui-checked': {
+                                                                color: '#EC4899',
+                                                            },
+                                                        }}
+                                                    />
+                                                } 
+                                                label={
+                                                    <span className="flex items-center text-gray-700">
+                                                        <FemaleIcon sx={{ fontSize: 18, marginRight: 1 }} />
+                                                        Female
+                                                    </span>
+                                                } 
+                                            />
+                                        </RadioGroup>
+                                    </div>
+
+                                    {/* Avatar Upload */}
+                                    <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-6 border border-blue-200">
+                                        <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
+                                            <CameraAltIcon sx={{ fontSize: 20, color: '#06B6D4' }} className="mr-2" />
+                                            Profile Picture
+                                        </h4>
+                                        <div className="flex flex-col sm:flex-row items-center gap-6">
+                                            <Avatar
+                                                alt="Avatar Preview"
+                                                src={avatarPreview}
+                                                sx={{ 
+                                                    width: 80, 
+                                                    height: 80,
+                                                    border: '3px solid white',
+                                                    boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)'
+                                                }}
+                                                className="transition-all duration-300 hover:scale-105"
+                                            />
+                                            <label className="flex-1 cursor-pointer">
+                                                <input
+                                                    type="file"
+                                                    name="avatar"
+                                                    accept="image/*"
+                                                    onChange={handleUpdateDataChange}
+                                                    className="hidden"
+                                                />
+                                                <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white py-3 px-6 rounded-xl font-semibold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-blue-500/20 flex items-center justify-center group">
+                                                    <CameraAltIcon sx={{ fontSize: 20 }} className="mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                                    Choose New Photo
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <p className="text-gray-600 text-sm mt-3 text-center sm:text-left">
+                                            Recommended: Square image, at least 400x400 pixels
+                                        </p>
+                                    </div>
+                                </div>
+
+                                {/* Action Buttons */}
+                                <div className="space-y-4 pt-4">
+                                    <button 
+                                        type="submit"
+                                        className="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-purple-500/20 flex items-center justify-center group"
+                                    >
+                                        <EditIcon sx={{ fontSize: 20 }} className="mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                        Update Profile
+                                    </button>
+                                    
+                                    <Link 
+                                        to="/account"
+                                        className="w-full bg-white text-gray-700 py-4 rounded-xl font-semibold border-2 border-gray-200 hover:border-purple-300 hover:shadow-xl transition-all duration-300 flex items-center justify-center group"
+                                    >
+                                        <ArrowBackIcon sx={{ fontSize: 20 }} className="mr-2 group-hover:-translate-x-1 transition-transform duration-300" />
+                                        Back to Account
+                                    </Link>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    {/* <!-- signup column --> */}
                 </div>
-                {/* <!-- row --> */}
 
+                {/* Background Decorative Elements */}
+                <div className="fixed bottom-0 left-0 w-64 h-64 bg-purple-200/20 rounded-full blur-3xl -z-10"></div>
+                <div className="fixed top-0 right-0 w-80 h-80 bg-pink-200/20 rounded-full blur-3xl -z-10"></div>
             </main>
         </>
     );
