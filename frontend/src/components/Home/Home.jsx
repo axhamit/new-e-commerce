@@ -283,70 +283,71 @@ const Home = () => {
         </section>
 
         {/* Luxury Features Grid */}
-        <section className="relative">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-50/80 via-cyan-50/80 to-emerald-50/80 backdrop-blur-xl rounded-2xl mb-6 border border-blue-200/50 shadow-lg">
-              <DiamondIcon sx={{ fontSize: 20, color: '#06B6D4' }} className="mr-2" />
-              <span className="text-transparent bg-gradient-to-r from-blue-600 via-cyan-600 to-emerald-600 bg-clip-text font-bold text-sm tracking-widest uppercase">
-                Premium Experience
-              </span>
-              <DiamondIcon sx={{ fontSize: 20, color: '#10B981' }} className="ml-2" />
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              The <span className="bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent">Aarohama Tresure</span> Difference
-            </h2>
-            <p className="text-gray-600 text-lg lg:text-xl font-light max-w-2xl mx-auto">
-              Beyond shopping - a complete luxury fashion journey
-            </p>
+       {/* Luxury Features Grid */}
+<section className="relative">
+  <div className="text-center mb-16">
+    <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-50/80 via-pink-50/80 to-rose-50/80 backdrop-blur-xl rounded-2xl mb-6 border border-purple-200/50 shadow-lg">
+      <DiamondIcon sx={{ fontSize: 20, color: '#8B5CF6' }} className="mr-2" />
+      <span className="text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-rose-600 bg-clip-text font-bold text-sm tracking-widest uppercase">
+        Premium Experience
+      </span>
+      <DiamondIcon sx={{ fontSize: 20, color: '#EC4899' }} className="ml-2" />
+    </div>
+    <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+      The <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Aarohama Tresure</span> Difference
+    </h2>
+    <p className="text-gray-600 text-lg lg:text-xl font-light max-w-2xl mx-auto">
+      Beyond shopping - a complete luxury fashion journey
+    </p>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+    {luxuryFeatures.map((feature, index) => (
+      <div 
+        key={index}
+        className="group bg-white rounded-2xl p-8 border-2 border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
+      >
+        {/* Background Effects */}
+        <div className="absolute top-0 right-0 w-20 h-20 opacity-[0.03]">
+          <div className={`w-full h-full bg-gradient-to-br ${feature.gradient} rounded-full animate-pulse`}></div>
+        </div>
+        
+        {/* 3D Icon Container */}
+        <div className={`
+          w-16 h-16 rounded-2xl 
+          ${feature.iconBg}
+          flex items-center justify-center 
+          shadow-2xl mb-6
+          group-hover:scale-110 
+          group-hover:rotate-3
+          transition-all duration-500
+          relative z-10
+          border-2 border-white/40
+          transform-gpu
+        `}>
+          <div className="text-white filter drop-shadow-lg">
+            {feature.icon}
           </div>
+          {/* 3D Shadow Effect */}
+          <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-500`}></div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-            {luxuryFeatures.map((feature, index) => (
-              <div 
-                key={index}
-                className="group bg-white rounded-2xl p-8 border-2 border-gray-100 hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 relative overflow-hidden"
-              >
-                {/* Background Effects */}
-                <div className="absolute top-0 right-0 w-20 h-20 opacity-[0.03]">
-                  <div className={`w-full h-full bg-gradient-to-br ${feature.gradient} rounded-full animate-pulse`}></div>
-                </div>
-                
-                {/* 3D Icon Container */}
-                <div className={`
-                  w-16 h-16 rounded-2xl 
-                  ${feature.iconBg}
-                  flex items-center justify-center 
-                  shadow-2xl mb-6
-                  group-hover:scale-110 
-                  group-hover:rotate-3
-                  transition-all duration-500
-                  relative z-10
-                  border-2 border-white/40
-                  transform-gpu
-                `}>
-                  <div className="text-white filter drop-shadow-lg">
-                    {feature.icon}
-                  </div>
-                  {/* 3D Shadow Effect */}
-                  <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.gradient} blur-md opacity-30 group-hover:opacity-50 transition-opacity duration-500`}></div>
-                </div>
+        <h3 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-gray-800 transition-colors relative z-10">
+          {feature.title}
+        </h3>
+        <p className="text-gray-600 font-light leading-relaxed relative z-10">
+          {feature.description}
+        </p>
 
-                <h3 className="font-bold text-xl text-gray-900 mb-3 group-hover:text-gray-800 transition-colors relative z-10">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 font-light leading-relaxed relative z-10">
-                  {feature.description}
-                </p>
-
-                {/* Hover Effect Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500 rounded-2xl`}></div>
-                
-                {/* Glow Effect */}
-                <div className={`absolute -inset-1 bg-gradient-to-br ${feature.gradient} rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500 -z-10`}></div>
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* Hover Effect Overlay */}
+        <div className={`absolute inset-0 bg-gradient-to-br ${feature.gradient} opacity-0 group-hover:opacity-[0.02] transition-opacity duration-500 rounded-2xl`}></div>
+        
+        {/* Glow Effect */}
+        <div className={`absolute -inset-1 bg-gradient-to-br ${feature.gradient} rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-500 -z-10`}></div>
+      </div>
+    ))}
+  </div>
+</section>
 
         {/* Seasonal Edit */}
         <section className="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 lg:p-12 border-2 border-blue-100 shadow-2xl overflow-hidden">
@@ -406,39 +407,40 @@ const Home = () => {
         )}
 
         {/* Newsletter - Luxury Signup */}
-        <section className="relative bg-gradient-to-r from-amber-50 via-white to-rose-50 rounded-3xl p-8 lg:p-16 text-center border-2 border-amber-100 shadow-2xl overflow-hidden">
-          <div className="absolute top-0 left-0 w-32 h-32 bg-amber-200/40 rounded-full blur-2xl"></div>
-          <div className="absolute bottom-0 right-0 w-40 h-40 bg-rose-200/40 rounded-full blur-2xl"></div>
-          
-          <div className="relative max-w-3xl mx-auto">
-            <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-50/80 to-rose-50/80 backdrop-blur-xl rounded-2xl mb-6 border border-amber-200/50 shadow-lg">
-              <DiamondIcon sx={{ fontSize: 20, color: '#F59E0B' }} className="mr-2" />
-              <span className="text-transparent bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text font-bold text-sm tracking-widest uppercase">
-                Exclusive Access
-              </span>
-              <DiamondIcon sx={{ fontSize: 20, color: '#F43F5E' }} className="ml-2" />
-            </div>
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Join the <span className="bg-gradient-to-r from-amber-600 to-rose-600 bg-clip-text text-transparent">Aarohama Tresure</span> Community
-            </h2>
-            <p className="text-gray-600 font-light text-lg lg:text-xl mb-8 leading-relaxed">
-              Be the first to access new collections, exclusive events, private sales, and personalized style insights
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email address" 
-                className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-white font-light shadow-sm backdrop-blur-sm"
-              />
-              <button className="bg-gradient-to-r from-amber-600 to-rose-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-amber-500/20">
-                Subscribe
-              </button>
-            </div>
-            <p className="text-gray-500 text-sm mt-6 font-light">
-              By subscribing, you agree to our Privacy Policy and consent to receive luxury fashion updates
-            </p>
-          </div>
-        </section>
+      {/* Newsletter - Luxury Signup */}
+<section className="relative bg-gradient-to-r from-purple-50 via-white to-pink-50 rounded-3xl p-8 lg:p-16 text-center border-2 border-purple-100 shadow-2xl overflow-hidden">
+  <div className="absolute top-0 left-0 w-32 h-32 bg-purple-200/40 rounded-full blur-2xl"></div>
+  <div className="absolute bottom-0 right-0 w-40 h-40 bg-pink-200/40 rounded-full blur-2xl"></div>
+  
+  <div className="relative max-w-3xl mx-auto">
+    <div className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-purple-50/80 to-pink-50/80 backdrop-blur-xl rounded-2xl mb-6 border border-purple-200/50 shadow-lg">
+      <DiamondIcon sx={{ fontSize: 20, color: '#8B5CF6' }} className="mr-2" />
+      <span className="text-transparent bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text font-bold text-sm tracking-widest uppercase">
+        Exclusive Access
+      </span>
+      <DiamondIcon sx={{ fontSize: 20, color: '#EC4899' }} className="ml-2" />
+    </div>
+    <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+      Join the <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">Aarohama Tresure</span> Community
+    </h2>
+    <p className="text-gray-600 font-light text-lg lg:text-xl mb-8 leading-relaxed">
+      Be the first to access new collections, exclusive events, private sales, and personalized style insights
+    </p>
+    <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+      <input 
+        type="email" 
+        placeholder="Enter your email address" 
+        className="flex-1 px-6 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white font-light shadow-sm backdrop-blur-sm"
+      />
+      <button className="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-xl font-bold hover:shadow-2xl transition-all duration-300 transform hover:scale-105 shadow-lg border-2 border-purple-500/20">
+        Subscribe
+      </button>
+    </div>
+    <p className="text-gray-500 text-sm mt-6 font-light">
+      By subscribing, you agree to our Privacy Policy and consent to receive luxury fashion updates
+    </p>
+  </div>
+</section>
 
       </main>
 
