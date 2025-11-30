@@ -1,24 +1,63 @@
-.slick-arrow.slick-prev,
-.slick-arrow.slick-next {
-    width: 47px;
-    height: 104px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 8px 12px rgba(0,0,0,.2);
-    background: #fcfcfc;
-    color: #000;
-    z-index: 1;
-}
-.slick-prev {
-    left: 0;
-    border-radius: 0 5px 5px 0;
-}
+/* Banner.css */
+.slick-prev,
 .slick-next {
-    right: 0;
-    border-radius: 5px 0 0 5px;
+  width: 50px;
+  height: 50px;
+  z-index: 20;
 }
-.slick-prev::before,
-.slick-next::before {
-    display: none;
+
+.slick-prev:hover,
+.slick-next:hover {
+  background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.slick-dots {
+  bottom: 40px;
+}
+
+.slick-dots li {
+  margin: 0 4px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  opacity: 0.5;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: #EC4899;
+  transform: scale(1.2);
+}
+
+/* Smooth fade animation */
+.slick-slide {
+  transition: opacity 0.8s ease-in-out;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .slick-prev {
+    left: 10px !important;
+  }
+  
+  .slick-next {
+    right: 10px !important;
+  }
+  
+  .slick-dots {
+    bottom: 20px;
+  }
+}
+
+/* Luxury gradient overlay effects */
+.banner-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.1) 0%,
+    rgba(236, 72, 153, 0.1) 50%,
+    rgba(99, 102, 241, 0.1) 100%
+  );
 }
