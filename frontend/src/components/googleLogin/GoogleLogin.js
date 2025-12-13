@@ -3,7 +3,7 @@ import React from 'react';
 const GoogleLoginButton = ({ text = "Continue with Google" }) => {
     const handleGoogleLogin = () => {
         // Redirect to backend Google OAuth endpoint
-        window.location.href = 'http://localhost:4000/api/v1/auth/google';
+        window.location.href = 'https://new-e-commerce-ksd0.onrender.com/api/v1/auth/google';
     };
 
     return (
