@@ -14,7 +14,7 @@ exports.googleAuth = asyncErrorHandler(async (req, res, next) => {
     try {
         const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
         const options = {
-            redirect_uri: 'https://new-e-commerce-ksd0.onrender.com/api/v1/auth/google/callback',
+            redirect_uri: 'http://localhost:4000/api/v1/auth/google/callback',
             client_id: process.env.GOOGLE_CLIENT_ID,
             access_type: 'offline',
             response_type: 'code',
@@ -45,7 +45,7 @@ exports.googleCallback = asyncErrorHandler(async (req, res, next) => {
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      'https://new-e-commerce-ksd0.onrender.com/api/v1/auth/google/callback'
+      'http://localhost:4000/api/v1/auth/google/callback'
     );
 
     const { tokens } = await oauth2Client.getToken(code);
@@ -77,7 +77,10 @@ exports.googleCallback = asyncErrorHandler(async (req, res, next) => {
     });
 
     // redirect (no token in URL)
-    return res.redirect(`http://localhost:3000/oauth-callback?success=true&isNewUser=${isNewUser}`);
+    // return res.redirect(`http://localhost:3000/oauth-callback?success=true&isNewUser=${isNewUser}`);
+    return res.redirect(
+  `http://localhost:3000/oauth-callback?success=true&token=${token}&isNewUser=${isNewUser}`
+);
   } catch (error) {
     console.error('Google OAuth error details:', error.response?.data || error.message);
     return res.redirect('http://localhost:3000/oauth-callback?error=google_auth_failed');

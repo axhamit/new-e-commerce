@@ -1,42 +1,41 @@
 const path = require('path');
 const express = require('express');
 const cloudinary = require('cloudinary');
+const dotenv = require('dotenv');
 
-// FIXED PATHS (IMPORTANT)
-const app = require('./app');
-const connectDatabase = require('./config/database');
-
-// Load environment variables
-require('dotenv').config({
-  path: path.join(__dirname, 'config/.config.env')
+// ✅ Load env FIRST
+dotenv.config({
+  path: path.join(__dirname, 'backend/config/.config.env'),
 });
+
+// ✅ Import AFTER dotenv
+const app = require('./backend/app');
+const connectDatabase = require('./backend/config/database');
 
 const PORT = process.env.PORT || 4000;
 
-// Handle uncaught exceptions
+// ✅ Handle uncaught exceptions
 process.on('uncaughtException', (err) => {
-  console.log(`Uncaught Exception Error: ${err.message}`);
+  console.log(`Uncaught Exception: ${err.message}`);
   process.exit(1);
 });
 
-// Connect to MongoDB
+// ✅ Connect MongoDB
 connectDatabase();
 
-// Cloudinary Config
-cloudinary.config({
+// ✅ Cloudinary Config
+cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Deployment setup
-__dirname = path.resolve();
+// ✅ Deployment
 if (process.env.NODE_ENV === 'production') {
-  // Serve frontend from root/frontend/build
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use(express.static(path.join(__dirname, 'frontend/build')));
 
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../frontend', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
@@ -44,13 +43,13 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// Start server
+// ✅ Start server
 const server = app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
 
-// Handle unhandled promise rejections
+// ✅ Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
-  console.log(`Unhandled Promise Rejection: ${err.message}`);
+  console.log(`Unhandled Rejection: ${err.message}`);
   server.close(() => process.exit(1));
 });
