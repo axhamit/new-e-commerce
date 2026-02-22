@@ -5,7 +5,7 @@ const dotenv = require('dotenv');
 
 // ✅ Load env FIRST
 dotenv.config({
-  path: path.join(__dirname, 'backend/config/.config.env'),
+  // path: path.join(__dirname, 'backend/config/.config.env'),
 });
 
 // ✅ Import AFTER dotenv
